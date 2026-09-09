@@ -1,0 +1,52 @@
+import java.util.*;
+
+class Student {
+    int id;
+    String name;
+    double cgpa;
+
+    Student(int id, String name, double cgpa) {
+        this.id = id;
+        this.name = name;
+        this.cgpa = cgpa;
+    }
+}
+
+class Priorities {
+    public List<Student> getStudents(List<String> events) {
+
+        PriorityQueue<Student> pq = new PriorityQueue<>((a, b) -> {
+
+            if (a.cgpa != b.cgpa)
+                return Double.compare(b.cgpa, a.cgpa);
+
+            if (!a.name.equals(b.name))
+                return a.name.compareTo(b.name);
+
+            return a.id - b.id;
+        });
+
+        for (String event : events) {
+
+            String[] x = event.split(" ");
+
+            if (x[0].equals("ENTER")) {
+                pq.add(new Student(
+                    Integer.parseInt(x[3]),
+                    x[1],
+                    Double.parseDouble(x[2])
+                ));
+            } else {
+                if (!pq.isEmpty())
+                    pq.poll();
+            }
+        }
+
+        List<Student> ans = new ArrayList<>();
+
+        while (!pq.isEmpty())
+            ans.add(pq.poll());
+
+        return ans;
+    }
+}
