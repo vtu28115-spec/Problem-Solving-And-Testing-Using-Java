@@ -1,0 +1,23 @@
+Collections.sort(studentList, new Comparator<Student>() {
+    @Override
+    public int compare(Student s1, Student s2) {
+
+        // Sort by CGPA (Descending)
+        if (s1.getCgpa() < s2.getCgpa())
+            return 1;
+        if (s1.getCgpa() > s2.getCgpa())
+            return -1;
+
+        // If CGPA is same, sort by First Name (Ascending)
+        int nameCompare = s1.getFname().compareTo(s2.getFname());
+        if (nameCompare != 0)
+            return nameCompare;
+
+        // If First Name is also same, sort by ID (Ascending)
+        return s1.getId() - s2.getId();
+    }
+});
+
+for (Student student : studentList) {
+    System.out.println(student.getFname());
+}
